@@ -1,14 +1,18 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, MapPin, MessageCircle, Phone, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { profileSamples, type Category, type Listing } from "@/lib/directory";
+import { profileSamples, splitProducts, type Category, type Listing } from "@/lib/directory";
+import { useAuth } from "@/lib/use-auth";
 import datePhoto from "@/assets/date-orchard.jpg";
 import craftPhoto from "@/assets/balochi-craft.jpg";
 
 export function ProfileCard({ category, listing }: { category: Category; listing?: Listing }) {
+  const { user } = useAuth();
   const sample = profileSamples[category];
   const fallbackPhoto = category === "dates" ? datePhoto : craftPhoto;
   const photo = listing?.photos?.[0] || fallbackPhoto;
+  const isOwner = !!listing && user?.id === listing.owner_id;
+  const photoLabel = !listing ? "PROFILE FORMAT PREVIEW" : isOwner ? "YOUR LISTING" : "VERIFIED LISTING";
   const statusText = listing
     ? listing.status === "approved"
       ? "Live listing"
@@ -31,7 +35,7 @@ export function ProfileCard({ category, listing }: { category: Category; listing
           width={1024}
           height={1024}
         />
-        <span className="photo-label">{listing ? "YOUR LISTING" : "PROFILE FORMAT PREVIEW"}</span>
+        <span className="photo-label">{photoLabel}</span>
       </div>
       <div className="profile-card-body">
         <div className="card-overline">
@@ -45,7 +49,11 @@ export function ProfileCard({ category, listing }: { category: Category; listing
         <div className="card-rule" />
         <div className="card-detail">
           <span>{category === "dates" ? "VARIETIES" : "CRAFT / TECHNIQUES"}</span>
-          <strong>{listing?.products || sample.products}</strong>
+          <ul className="product-list">
+            {splitProducts(listing?.products || sample.products).map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
         </div>
         <p className="card-description">{listing?.description || sample.description}</p>
         <div className="card-meta">

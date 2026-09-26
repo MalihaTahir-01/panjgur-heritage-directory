@@ -234,4 +234,10 @@ button { cursor: pointer; }
 @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 /* Readable, consistent interactive controls throughout the directory. */
 .listing-callout .callout-grid > a { background: var(--background); color: var(--foreground); }
-}
+/* Bulleted product/technique lists on cards and profile pages. */
+.product-list { margin: 0; padding-left: 18px; font-size: 12px; font-weight: 700; line-height: 1.6; }
+.profile-main .product-list { font-size: 14px; font-weight: 400; color: var(--ink-soft); line-height: 1.8; }
+.product-list li { margin-bottom: 2px; }
+/* Force readable text on every solid dark/primary-colored button or link, regardless of tag. */
+.bg-primary, a.bg-primary, button.bg-primary, .whatsapp-button, .submit-listing { color: var(--primary-foreground) !important; }
+.bg-primary svg, .whatsapp-button svg, .submit-listing svg { color: var(--primary-foreground) !important; }

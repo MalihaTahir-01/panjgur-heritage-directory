@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ArrowLeft, MapPin, MessageCircle, Phone, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { fetchListingById, type Listing } from "@/lib/directory";
+import { fetchListingById, splitProducts, type Listing } from "@/lib/directory";
 import { useAuth } from "@/lib/use-auth";
 import datePhoto from "@/assets/date-orchard.jpg";
 import craftPhoto from "@/assets/balochi-craft.jpg";
@@ -102,7 +102,11 @@ function ListingProfilePage() {
             <section>
               <p className="eyebrow">02 / WHAT THEY MAKE</p>
               <h2>{category === "dates" ? "Date varieties" : "Products & techniques"}</h2>
-              <p>{listing.products}</p>
+              <ul className="product-list">
+                {splitProducts(listing.products).map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
             </section>
             <section>
               <p className="eyebrow">03 / WHEN TO REACH OUT</p>

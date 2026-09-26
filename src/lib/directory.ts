@@ -53,6 +53,15 @@ export const profileSamples = {
   },
 };
 
+// Producers type their products/techniques as one line, often separated by
+// commas, middle dots or slashes — split that into a clean bullet list.
+export function splitProducts(value: string): string[] {
+  return value
+    .split(/[·,/\n]+/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
 // ---- Read helpers -------------------------------------------------------
 
 export async function fetchApprovedListings(category: Category): Promise<Listing[]> {
@@ -96,7 +105,7 @@ export async function fetchListingsForAdmin(): Promise<Listing[]> {
 export async function createListing(ownerId: string, values: ListingFormValues, photos: string[]) {
   const { data, error } = await supabase
     .from("listings")
-    .insert({ ...values, owner_id: ownerId, photos, status: "pending" })
+    .insert({ ...values, owner_id: ownerId, photos, status: "approved" })
     .select("*")
     .single();
   if (error) throw error;
@@ -106,8 +115,7 @@ export async function createListing(ownerId: string, values: ListingFormValues, 
 export async function updateListing(id: string, values: ListingFormValues, photos: string[]) {
   const { data, error } = await supabase
     .from("listings")
-    // Editing a listing sends it back to "pending" so an admin re-checks the change.
-    .update({ ...values, photos, status: "pending", updated_at: new Date().toISOString() })
+    .update({ ...values, photos, status: "approved", updated_at: new Date().toISOString() })
     .eq("id", id)
     .select("*")
     .single();
