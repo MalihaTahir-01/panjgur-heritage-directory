@@ -1,0 +1,3 @@
+- [ ] Add a language choice before entering any directory screen and allow switching afterward.
+- [ ] Translate all visible directory, profile, listing, dashboard, and admin UI into English, Urdu, and Balochi.
+- [ ] Check language flow, layout, and prototype interactions on desktop and mobile.
