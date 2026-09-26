@@ -1,18 +1,170 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
-import { ArrowRight, MapPin, MoveUpRight } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { SectionEyebrow } from '@/components/directory/site'
-import oasis from '@/assets/panjgur-oasis.jpg'
-import dates from '@/assets/date-orchard.jpg'
-import crafts from '@/assets/balochi-craft.jpg'
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight, MapPin, MoveUpRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { SectionEyebrow } from "@/components/directory/site";
+import oasis from "@/assets/panjgur-oasis.jpg";
+import dates from "@/assets/date-orchard.jpg";
+import crafts from "@/assets/balochi-craft.jpg";
 
-export const Route = createFileRoute('/')({
-  head: () => ({ meta: [{ title: 'Panjgur Heritage Directory — Discover Producers & Heritage Crafts' }, { name: 'description', content: 'Discover Panjgur date growers and traditional artisans in a community directory built for direct connection.' }, { property: 'og:title', content: 'Panjgur Heritage Directory' }, { property: 'og:description', content: 'Discover Panjgur date growers and traditional artisans in a community directory built for direct connection.' }, { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' }] }),
+export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Panjgur Heritage Directory — Discover Producers & Heritage Crafts" },
+      {
+        name: "description",
+        content:
+          "Discover Panjgur date growers and traditional artisans in a community directory built for direct connection.",
+      },
+      { property: "og:title", content: "Panjgur Heritage Directory" },
+      {
+        property: "og:description",
+        content:
+          "Discover Panjgur date growers and traditional artisans in a community directory built for direct connection.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Home,
-})
-function Home() { return <main>
-  <section className="home-hero"><img src={oasis} alt="Date palm oasis and mountains in Panjgur" width={1536} height={1024} className="hero-image"/><div className="hero-shade"/><div className="container-wide hero-content"><p className="hero-eyebrow"><span className="eyebrow-line"/> THE PEOPLE & PLACES OF PANJGUR</p><h1>Discover Panjgur’s <br/><em>Producers & Heritage Crafts</em></h1><p>A digital directory connecting buyers and visitors with local date growers, processors and traditional artisans in Panjgur.</p><a className="hero-discover" href="#explore">Explore the directory <span><ArrowRight size={18}/></span></a></div><div className="hero-caption">PANJGUR · BALOCHISTAN, PAKISTAN</div></section>
-  <section className="explore-section" id="explore"><div className="container-wide"><div className="section-heading"><div><SectionEyebrow>EXPLORE THE DIRECTORY</SectionEyebrow><h2>Find the people behind<br/>the place.</h2></div><p>Two traditions, one home. Start with what you’re looking for.</p></div><div className="category-grid"><Link to="/dates" className="category-card"><img src={dates} alt="Ripe date clusters in a palm orchard" width={1024} height={1024} loading="lazy"/><span className="category-overlay"/><div className="category-content"><span className="category-index">01 / AGRICULTURE</span><div><h3>Dates <MoveUpRight/></h3><p>Explore local date growers, processors and date products.</p></div></div></Link><Link to="/crafts" className="category-card"><img src={crafts} alt="Traditional Balochi hand embroidery" width={1024} height={1024} loading="lazy"/><span className="category-overlay"/><div className="category-content"><span className="category-index">02 / HANDMADE HERITAGE</span><div><h3>Crafts <MoveUpRight/></h3><p>Discover traditional embroidery, palm crafts and local workmanship.</p></div></div></Link></div></div></section>
-  <section className="about-section"><div className="container-wide about-grid"><div className="about-map" aria-label="Panjgur location in Balochistan"><div className="map-outline"><span className="map-point"><span/></span></div><div className="map-label"><MapPin size={15}/> PANJGUR <span>28°36′ N  63°48′ E</span></div></div><div className="about-copy"><SectionEyebrow>ABOUT PANJGUR</SectionEyebrow><h2>An oasis of craft<br/>and cultivation.</h2><p>Set in western Balochistan, Panjgur is known for its date agriculture and the skill of its makers. From palm groves to intricate handwork, local knowledge is passed between generations.</p><p>This directory makes it easier to discover the people carrying these traditions forward — and reach them directly.</p><div className="about-facts"><span>DATE AGRICULTURE</span><span>TRADITIONAL CRAFTS</span><span>LOCAL CONNECTION</span></div></div></div></section>
-  <section className="listing-callout"><div className="container-wide callout-grid"><div><SectionEyebrow>FOR PANJGUR PRODUCERS</SectionEyebrow><h2>Want to be listed?</h2><p>Local producers and artisans can add or update their own directory information.</p></div><Button asChild size="lg"><Link to="/listing">Add / Update Your Listing <ArrowRight/></Link></Button></div></section>
-</main> }
+});
+function Home() {
+  return (
+    <main>
+      <section className="home-hero">
+        <img
+          src={oasis}
+          alt="Date palm oasis and mountains in Panjgur"
+          width={1536}
+          height={1024}
+          className="hero-image"
+        />
+        <div className="hero-shade" />
+        <div className="container-wide hero-content">
+          <p className="hero-eyebrow">
+            <span className="eyebrow-line" /> THE PEOPLE & PLACES OF PANJGUR
+          </p>
+          <h1>
+            Discover Panjgur’s <br />
+            <em>Producers & Heritage Crafts</em>
+          </h1>
+          <p>
+            A digital directory connecting buyers and visitors with local date growers, processors
+            and traditional artisans in Panjgur.
+          </p>
+          <a className="hero-discover" href="#explore">
+            Explore the directory{" "}
+            <span>
+              <ArrowRight size={18} />
+            </span>
+          </a>
+        </div>
+        <div className="hero-caption">PANJGUR · BALOCHISTAN, PAKISTAN</div>
+      </section>
+      <section className="explore-section" id="explore">
+        <div className="container-wide">
+          <div className="section-heading">
+            <div>
+              <SectionEyebrow>EXPLORE THE DIRECTORY</SectionEyebrow>
+              <h2>
+                Find the people behind
+                <br />
+                the place.
+              </h2>
+            </div>
+            <p>Two traditions, one home. Start with what you’re looking for.</p>
+          </div>
+          <div className="category-grid">
+            <Link to="/dates" className="category-card">
+              <img
+                src={dates}
+                alt="Ripe date clusters in a palm orchard"
+                width={1024}
+                height={1024}
+                loading="lazy"
+              />
+              <span className="category-overlay" />
+              <div className="category-content">
+                <span className="category-index">01 / AGRICULTURE</span>
+                <div>
+                  <h3>
+                    Dates <MoveUpRight />
+                  </h3>
+                  <p>Explore local date growers, processors and date products.</p>
+                </div>
+              </div>
+            </Link>
+            <Link to="/crafts" className="category-card">
+              <img
+                src={crafts}
+                alt="Traditional Balochi hand embroidery"
+                width={1024}
+                height={1024}
+                loading="lazy"
+              />
+              <span className="category-overlay" />
+              <div className="category-content">
+                <span className="category-index">02 / HANDMADE HERITAGE</span>
+                <div>
+                  <h3>
+                    Crafts <MoveUpRight />
+                  </h3>
+                  <p>Discover traditional embroidery, palm crafts and local workmanship.</p>
+                </div>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+      <section className="about-section">
+        <div className="container-wide about-grid">
+          <div className="about-map" aria-label="Panjgur location in Balochistan">
+            <div className="map-outline">
+              <span className="map-point">
+                <span />
+              </span>
+            </div>
+            <div className="map-label">
+              <MapPin size={15} /> PANJGUR <span>28°36′ N 63°48′ E</span>
+            </div>
+          </div>
+          <div className="about-copy">
+            <SectionEyebrow>ABOUT PANJGUR</SectionEyebrow>
+            <h2>
+              An oasis of craft
+              <br />
+              and cultivation.
+            </h2>
+            <p>
+              Set in western Balochistan, Panjgur is known for its date agriculture and the skill of
+              its makers. From palm groves to intricate handwork, local knowledge is passed between
+              generations.
+            </p>
+            <p>
+              This directory makes it easier to discover the people carrying these traditions
+              forward — and reach them directly.
+            </p>
+            <div className="about-facts">
+              <span>DATE AGRICULTURE</span>
+              <span>TRADITIONAL CRAFTS</span>
+              <span>LOCAL CONNECTION</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="listing-callout">
+        <div className="container-wide callout-grid">
+          <div>
+            <SectionEyebrow>FOR PANJGUR PRODUCERS</SectionEyebrow>
+            <h2>Want to be listed?</h2>
+            <p>Local producers and artisans can add or update their own directory information.</p>
+          </div>
+          <Button asChild size="lg">
+            <Link to="/listing">
+              Add / Update Your Listing <ArrowRight />
+            </Link>
+          </Button>
+        </div>
+      </section>
+    </main>
+  );
+}

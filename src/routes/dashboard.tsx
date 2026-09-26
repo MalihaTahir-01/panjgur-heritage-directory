@@ -1,59 +1,72 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
-import { ArrowRight, Camera, LogOut, Pencil, Phone, ShieldCheck, Info, LockKeyhole } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { PageIntro } from '@/components/directory/site'
-import { ProfileCard } from '@/components/directory/profile-card'
-import { useAuth } from '@/lib/use-auth'
-import { deleteListing, fetchMyListings, type Listing } from '@/lib/directory'
-import { supabase } from '@/lib/supabase'
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import {
+  ArrowRight,
+  Camera,
+  LogOut,
+  Pencil,
+  Phone,
+  ShieldCheck,
+  Info,
+  LockKeyhole,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { PageIntro } from "@/components/directory/site";
+import { ProfileCard } from "@/components/directory/profile-card";
+import { useAuth } from "@/lib/use-auth";
+import { deleteListing, fetchMyListings, type Listing } from "@/lib/directory";
+import { supabase } from "@/lib/supabase";
 
-export const Route = createFileRoute('/dashboard')({
+export const Route = createFileRoute("/dashboard")({
   head: () => ({
     meta: [
-      { title: 'My Listing — Panjgur Heritage Directory' },
-      { name: 'description', content: 'Manage your Panjgur Heritage Directory listing.' },
+      { title: "My Listing — Panjgur Heritage Directory" },
+      { name: "description", content: "Manage your Panjgur Heritage Directory listing." },
     ],
   }),
   component: Dashboard,
-})
+});
 
-const statusLabel: Record<Listing['status'], string> = {
-  pending: 'Pending Review',
-  approved: 'Live in Directory',
-  rejected: 'Not Approved',
-}
+const statusLabel: Record<Listing["status"], string> = {
+  pending: "Pending Review",
+  approved: "Live in Directory",
+  rejected: "Not Approved",
+};
 
 function Dashboard() {
-  const { user, loading } = useAuth()
-  const [listings, setListings] = useState<Listing[]>([])
-  const [busy, setBusy] = useState(false)
+  const { user, loading } = useAuth();
+  const [listings, setListings] = useState<Listing[]>([]);
+  const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    if (!user) return
-    let active = true
-    fetchMyListings(user.id).then(data => {
-      if (active) setListings(data)
-    })
+    if (!user) return;
+    let active = true;
+    fetchMyListings(user.id).then((data) => {
+      if (active) setListings(data);
+    });
     return () => {
-      active = false
-    }
-  }, [user])
+      active = false;
+    };
+  }, [user]);
 
   const onDelete = async (id: string) => {
-    setBusy(true)
+    setBusy(true);
     try {
-      await deleteListing(id)
-      setListings(prev => prev.filter(l => l.id !== id))
+      await deleteListing(id);
+      setListings((prev) => prev.filter((l) => l.id !== id));
     } finally {
-      setBusy(false)
+      setBusy(false);
     }
-  }
+  };
 
   if (!loading && !user) {
     return (
       <main>
-        <PageIntro eyebrow="YOUR SPACE" title="My Directory Listing" description="Login to see and manage your own listing." />
+        <PageIntro
+          eyebrow="YOUR SPACE"
+          title="My Directory Listing"
+          description="Login to see and manage your own listing."
+        />
         <div className="container-wide dashboard-content">
           <div className="login-prompt">
             <div>
@@ -71,12 +84,16 @@ function Dashboard() {
           </div>
         </div>
       </main>
-    )
+    );
   }
 
   return (
     <main>
-      <PageIntro eyebrow="YOUR SPACE" title="My Directory Listing" description="A focused place to review and manage your own directory information." />
+      <PageIntro
+        eyebrow="YOUR SPACE"
+        title="My Directory Listing"
+        description="A focused place to review and manage your own directory information."
+      />
       <div className="container-wide dashboard-content">
         <div className="notice">
           <Info size={18} />
@@ -84,7 +101,7 @@ function Dashboard() {
         </div>
         {listings.length > 0 ? (
           <>
-            {listings.map(listing => (
+            {listings.map((listing) => (
               <div key={listing.id}>
                 <div className="dashboard-heading">
                   <div>
@@ -138,5 +155,5 @@ function Dashboard() {
         )}
       </div>
     </main>
-  )
+  );
 }

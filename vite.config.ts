@@ -12,4 +12,11 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Deploying to Vercel (not Lovable's own Cloudflare-based hosting), so the
+  // Nitro server build must target Vercel's serverless function format —
+  // otherwise it silently defaults to "cloudflare-module" and produces a
+  // Worker bundle Vercel can't run.
+  nitro: {
+    preset: "vercel",
+  },
 });

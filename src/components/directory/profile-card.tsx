@@ -1,24 +1,42 @@
-import { Link } from '@tanstack/react-router'
-import { ArrowUpRight, MapPin, MessageCircle, Phone, ShieldCheck } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { profileSamples, type Category, type Listing } from '@/lib/directory'
-import datePhoto from '@/assets/date-orchard.jpg'
-import craftPhoto from '@/assets/balochi-craft.jpg'
+import { Link } from "@tanstack/react-router";
+import { ArrowUpRight, MapPin, MessageCircle, Phone, ShieldCheck } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { profileSamples, type Category, type Listing } from "@/lib/directory";
+import datePhoto from "@/assets/date-orchard.jpg";
+import craftPhoto from "@/assets/balochi-craft.jpg";
 
 export function ProfileCard({ category, listing }: { category: Category; listing?: Listing }) {
-  const sample = profileSamples[category]
-  const fallbackPhoto = category === 'dates' ? datePhoto : craftPhoto
-  const photo = listing?.photos?.[0] || fallbackPhoto
-  const statusText = listing ? (listing.status === 'approved' ? 'Live listing' : listing.status === 'pending' ? 'Pending review' : 'Not approved') : 'Not a live listing'
+  const sample = profileSamples[category];
+  const fallbackPhoto = category === "dates" ? datePhoto : craftPhoto;
+  const photo = listing?.photos?.[0] || fallbackPhoto;
+  const statusText = listing
+    ? listing.status === "approved"
+      ? "Live listing"
+      : listing.status === "pending"
+        ? "Pending review"
+        : "Not approved"
+    : "Not a live listing";
 
   return (
     <article className="profile-card">
       <div className="profile-card-photo">
-        <img src={photo} alt={category === 'dates' ? 'Date palms bearing fruit' : 'Traditional Balochi embroidery in progress'} loading="lazy" width={1024} height={1024} />
-        <span className="photo-label">{listing ? 'YOUR LISTING' : 'PROFILE FORMAT PREVIEW'}</span>
+        <img
+          src={photo}
+          alt={
+            category === "dates"
+              ? "Date palms bearing fruit"
+              : "Traditional Balochi embroidery in progress"
+          }
+          loading="lazy"
+          width={1024}
+          height={1024}
+        />
+        <span className="photo-label">{listing ? "YOUR LISTING" : "PROFILE FORMAT PREVIEW"}</span>
       </div>
       <div className="profile-card-body">
-        <div className="card-overline">{category === 'dates' ? 'DATE PRODUCER / PROCESSOR' : 'ARTISAN / CRAFT PRODUCER'}</div>
+        <div className="card-overline">
+          {category === "dates" ? "DATE PRODUCER / PROCESSOR" : "ARTISAN / CRAFT PRODUCER"}
+        </div>
         <h2>{listing?.name || sample.title}</h2>
         <p className="card-location">
           <MapPin size={15} />
@@ -26,7 +44,7 @@ export function ProfileCard({ category, listing }: { category: Category; listing
         </p>
         <div className="card-rule" />
         <div className="card-detail">
-          <span>{category === 'dates' ? 'VARIETIES' : 'CRAFT / TECHNIQUES'}</span>
+          <span>{category === "dates" ? "VARIETIES" : "CRAFT / TECHNIQUES"}</span>
           <strong>{listing?.products || sample.products}</strong>
         </div>
         <p className="card-description">{listing?.description || sample.description}</p>
@@ -35,7 +53,7 @@ export function ProfileCard({ category, listing }: { category: Category; listing
         </div>
         <div className="card-contact">
           <span>
-            <Phone size={15} /> {listing?.phone || 'Phone added with verified listing'}
+            <Phone size={15} /> {listing?.phone || "Phone added with verified listing"}
           </span>
           <span>
             <ShieldCheck size={15} /> {statusText}
@@ -44,7 +62,11 @@ export function ProfileCard({ category, listing }: { category: Category; listing
         <div className="card-actions">
           <Button disabled={!listing} asChild={!!listing} className="whatsapp-button">
             {listing ? (
-              <a href={`https://wa.me/${listing.phone.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer">
+              <a
+                href={`https://wa.me/${listing.phone.replace(/\D/g, "")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <MessageCircle /> Contact on WhatsApp
               </a>
             ) : (
@@ -69,5 +91,5 @@ export function ProfileCard({ category, listing }: { category: Category; listing
         </div>
       </div>
     </article>
-  )
+  );
 }
