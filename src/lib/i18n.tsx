@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, type ReactNode } from "react";
 
 export type Language = "en" | "ur" | "bal";
 const translations: Record<string, [string, string]> = {
@@ -414,90 +414,15 @@ export function useLanguage() {
   return useContext(LanguageContext);
 }
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, changeLanguage] = useState<Language>("en");
-  const [ready, setReady] = useState(false);
-  useEffect(() => {
-    const saved = window.sessionStorage.getItem("panjgur-language");
-    if (saved === "en" || saved === "ur" || saved === "bal") changeLanguage(saved);
-    setReady(true);
-  }, []);
-  useEffect(() => {
-    if (ready) {
-      document.documentElement.lang = language === "bal" ? "bal" : language;
-      document.documentElement.dir = language === "en" ? "ltr" : "rtl";
-    }
-  }, [language, ready]);
-  const setLanguage = (next: Language) => {
-    window.sessionStorage.setItem("panjgur-language", next);
-    changeLanguage(next);
-  };
-  const t = (text: string) =>
-    language === "en" ? text : (translations[text]?.[language === "ur" ? 0 : 1] ?? text);
+  // Language switching is disabled for now — the site is English-only.
+  // Kept as a pass-through provider so components using useLanguage() / t()
+  // keep working unchanged.
+  const language: Language = "en";
+  const setLanguage = (_next: Language) => {};
+  const t = (text: string) => text;
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
-      {ready && !window.sessionStorage.getItem("panjgur-language") ? (
-        <LanguageGate onChoose={setLanguage} />
-      ) : (
-        children
-      )}
+      {children}
     </LanguageContext.Provider>
-  );
-}
-function LanguageGate({ onChoose }: { onChoose: (language: Language) => void }) {
-  const [selected, setSelected] = useState<Language>("en");
-  const [localT, setLocalT] = useState<(text: string) => string>(() => (text: string) => text);
-  const select = (next: Language) => {
-    setSelected(next);
-    setLocalT(
-      () => (text: string) =>
-        next === "en" ? text : (translations[text]?.[next === "ur" ? 0 : 1] ?? text),
-    );
-  };
-  return (
-    <main className="language-gate">
-      <div className="language-gate-image" aria-hidden="true" />
-      <div className="language-gate-panel">
-        <div className="language-gate-brand">
-          <span className="brand-mark" aria-hidden="true">
-            ✳
-          </span>
-          <span>
-            PANJGUR <small>HERITAGE DIRECTORY</small>
-          </span>
-        </div>
-        <div className="language-gate-content">
-          <p className="eyebrow">PANJGUR · BALOCHISTAN</p>
-          <h1>{localT("Choose your language")}</h1>
-          <p>{localT("Explore the people and traditions of Panjgur in your language.")}</p>
-          <div className="language-options" role="group" aria-label="Choose your language">
-            {(
-              [
-                ["en", "English", "EN"],
-                ["ur", "اردو", "UR"],
-                ["bal", "بلوچی", "BAL"],
-              ] as const
-            ).map(([code, label, short]) => (
-              <button
-                className={selected === code ? "chosen" : ""}
-                type="button"
-                key={code}
-                onClick={() => select(code)}
-                aria-pressed={selected === code}
-              >
-                <span>{label}</span>
-                <small>{short}</small>
-              </button>
-            ))}
-          </div>
-          <button className="language-continue" type="button" onClick={() => onChoose(selected)}>
-            {localT("Continue to directory")} <span aria-hidden="true">↗</span>
-          </button>
-          <p className="language-gate-note">
-            {localT("You can change your language at any time.")}
-          </p>
-        </div>
-        <span className="language-gate-foot">PANJGUR HERITAGE DIRECTORY</span>
-      </div>
-    </main>
   );
 }

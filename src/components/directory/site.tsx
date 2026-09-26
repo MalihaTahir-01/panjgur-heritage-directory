@@ -3,7 +3,7 @@ import { ArrowRight, Menu, X, MapPin, Instagram, User } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/use-auth";
-import { useLanguage, type Language } from "@/lib/i18n";
+import { useLanguage } from "@/lib/i18n";
 
 const nav = [
   { to: "/" as const, label: "Home" },
@@ -14,7 +14,7 @@ const nav = [
 
 export function SiteHeader() {
   const [menu, setMenu] = useState(false);
-  const { language, setLanguage, t } = useLanguage();
+  const { t } = useLanguage();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { user, loading } = useAuth();
   const accountLink = loading
@@ -63,17 +63,6 @@ export function SiteHeader() {
               <User size={16} /> {t(accountLink.label)}
             </Link>
           )}
-          <div className="language-switch" aria-label="Language">
-            <select
-              aria-label="Choose language"
-              value={language}
-              onChange={(e) => setLanguage(e.target.value as Language)}
-            >
-              <option value="en">English</option>
-              <option value="ur">اردو</option>
-              <option value="bal">بلوچی</option>
-            </select>
-          </div>
           <Button
             variant="ghost"
             size="icon"
