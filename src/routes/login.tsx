@@ -43,7 +43,7 @@ function LoginPage() {
         const { error: signUpError } = await supabase.auth.signUp({ email, password });
         if (signUpError) throw signUpError;
         setNotice(
-          "Account created. If email confirmation is enabled for your Supabase project, check your inbox before signing in.",
+          "Account created — check your email to confirm your account before signing in.",
         );
       } else {
         const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });

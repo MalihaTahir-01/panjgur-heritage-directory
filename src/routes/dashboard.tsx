@@ -129,7 +129,7 @@ function Dashboard() {
                     </Button>
                     <Button variant="outline" asChild>
                       <Link to="/listing">
-                        <Phone /> Update Contact Information <ArrowRight />
+                        <Phone /> Update Contact <ArrowRight />
                       </Link>
                     </Button>
                     <Button variant="ghost" disabled={busy} onClick={() => onDelete(listing.id)}>
